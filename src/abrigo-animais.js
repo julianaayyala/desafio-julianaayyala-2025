@@ -53,4 +53,4 @@ try {
   console.log("Erro:", e.message);
 }
 
-export { AbrigoAnimais };
+export { AbrigoAnimais as AbrigoAnimais };
