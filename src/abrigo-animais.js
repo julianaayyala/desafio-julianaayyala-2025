@@ -1,12 +1,13 @@
+export { AbrigoAnimais as AbrigoAnimais };
+
 const animais = [
-  { nome: "Rex", tipo: "cão", brinquedos: ["RATO", "SKATE"], status: 'abrigo', divideBrinquedo: true, ordemBrinquedo: true, companiaObrigatoria: false},
+  { nome: "Rex", tipo: "cão", brinquedos: ["RATO", "BOLA"], status: 'abrigo', divideBrinquedo: true, ordemBrinquedo: true, companiaObrigatoria: false},
   { nome: "Mimi", tipo: "gato", brinquedos: ["BOLA", "LASER"], status: 'abrigo', divideBrinquedo: false, ordemBrinquedo: true, companiaObrigatoria: false },
   { nome: "Fofo", tipo: "gato", brinquedos: ["BOLA", "RATO", "LASER"], status: 'abrigo', divideBrinquedo: false, ordemBrinquedo: true, companiaObrigatoria: false },
   { nome: "Zero", tipo: "gato", brinquedos: ["RATO", "BOLA"], status: 'abrigo', divideBrinquedo: false, ordemBrinquedo: true, companiaObrigatoria: false },
   { nome: "Bola", tipo: "cão", brinquedos: ["CAIXA", "NOVELO"], status: 'abrigo', divideBrinquedo: true, ordemBrinquedo: true, companiaObrigatoria: false },
   { nome: "Bebe", tipo: "cão", brinquedos: ["LASER", "RATO", "BOLA"], status: 'abrigo', divideBrinquedo: true, ordemBrinquedo: true, companiaObrigatoria: false },
-  { nome: "Loco", tipo: "jabuti", brinquedos: ["SKATE", "RATO"], status: 'abrigo', divideBrinquedo: true, ordemBrinquedo: false, companiaObrigatoria: true },
-  { nome: "Loca", tipo: "jabuti", brinquedos: ["SKATE", "RATO"], status: 'abrigo', divideBrinquedo: true, ordemBrinquedo: false, companiaObrigatoria: true }
+  { nome: "Loco", tipo: "jabuti", brinquedos: ["SKATE", "RATO"], status: 'abrigo', divideBrinquedo: true, ordemBrinquedo: false, companiaObrigatoria: true }
 ];
 
 let animaisPesquisados = [];
@@ -152,39 +153,40 @@ function validarBrinquedos(arrPessoa1, arrPessoa2){
 class AbrigoAnimais {
 
   encontraPessoas(brinquedosPessoa1, brinquedosPessoa2, ordemAnimais) {
-
+    animaisPesquisados = [];
     const arrPessoa1 = brinquedosPessoa1.split(',').map(x => x.trim().toUpperCase());
     const arrPessoa2 = brinquedosPessoa2.split(',').map(x => x.trim().toUpperCase());
     const arrOrdem = ordemAnimais.split(',').map(x => x.trim().toUpperCase());
     
     for(let animal of arrOrdem){
-      if(validarExistenciaDoAnimal(animal) || verificarDuplicados(arrOrdem)){
-        const erro = { erro: 'Animal inválido'};
-        console.log(erro);
-        return;
-      }
+        if(validarExistenciaDoAnimal(animal) || verificarDuplicados(arrOrdem)){
+            const erro = { erro: 'Animal inválido'};
+            //console.log(erro);
+            return erro;
+        }
     }
 
     if(validarBrinquedos(arrPessoa1, arrPessoa2)){
-      const erro = { erro: 'Brinquedo inválido'};
-      console.log(erro);
-      return;
+        const erro = { erro: 'Brinquedo inválido'};
+        //console.log(erro);
+        return erro;
     }
    
     for(let animal of arrOrdem){
-      checaMatch(animal, arrPessoa1, arrPessoa2);
+        checaMatch(animal, arrPessoa1, arrPessoa2);
     }
 
     if(animaisPesquisados.length > 0){
-      const resultado = { lista: animaisPesquisados.sort() };
-      console.log(resultado);
+        const resultado = { lista: animaisPesquisados.sort() };
+        //console.log(resultado);
+        return resultado;
     }
   }
 
 }
 
 // Teste
-new AbrigoAnimais().encontraPessoas('RATO,SKATE,BOLA,LASER', 'BOLA,SKATE', 'Mimi,Rex,Loco,Loca');
+new AbrigoAnimais().encontraPessoas('BOLA,LASER', 'BOLA,NOVELO,RATO,LASER', 'Mimi,Fofo,Rex,Bola');
 
 //{ nome: "Rex", tipo: "cão", brinquedos: ["RATO", "BOLA"], status: 'abrigo', divideBrinquedo: true, ordemBrinquedo: true, companiaObrigatoria: false},
 //{ nome: "Mimi", tipo: "gato", brinquedos: ["BOLA", "LASER"], status: 'abrigo', divideBrinquedo: false, ordemBrinquedo: true, companiaObrigatoria: false },
